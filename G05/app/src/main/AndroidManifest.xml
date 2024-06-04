@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TeLoLlevoYa"
+        android:usesCleartextTraffic="true"
+        tools:ignore="ExtraText"
+        tools:targetApi="31">
+        <activity
+            android:name=".pago.FacturaReservacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pedidos.negocio.NegociosOpcionesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pedidos.negocio.NegociosActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Reservaciones.ReservacionesConsultarActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Reservaciones.ReservacionActualizarActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Reservaciones.ReservacionInsertarActivity"
+            android:exported="true" />
+        <activity
+            android:name=".seguridad.registrarUbicacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".negocio.negocio.EditarMiNegocioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".negocio.producto.ProductosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".negocio.producto.EditarProductoActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".negocio.producto.CrearProductoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".negocio.negocio.MiNegocioOpcionesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".negocio.negocio.CrearNegocioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".negocio.negocio.MiNegocioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pedidos.negocio.PedidosDelRepartidorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".seguridad.rolIniciarSesionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".seguridad.rolRegistrarseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".seguridad.RegistrarseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".seguridad.IniciarSesionActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TeLoLlevoYa">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".pedidos.cliente.MisPedidosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pedidos.negocio.PedidosPendientesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pedidos.cliente.SeleccionarProductoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pedidos.cliente.CrearPedidoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pago.FacturaActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pago.SeleccionPagoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pago.PagoAprobadoRActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pago.PagoAprobadoPActivity"
+            android:exported="true" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+    </application>
+
+</manifest>

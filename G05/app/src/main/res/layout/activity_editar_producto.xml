@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".negocio.producto.EditarProductoActivity">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:background="#F27329"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="@string/barraEditarProducto"
+            android:textAlignment="center"
+            android:textColor="#FFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblIngreseNuevosDatos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+
+        android:text="@string/productoIndicaciones"
+        android:textSize="16sp"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
+
+    <TextView
+        android:id="@+id/lblCNP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/productoNombre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblIngreseNuevosDatos" />
+
+    <EditText
+        android:id="@+id/editProductoNombre"
+        android:layout_width="240dp"
+        android:layout_height="35dp"
+
+        android:layout_marginTop="16dp"
+
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:inputType="text"
+        android:maxLength="10"
+
+        android:text=""
+        android:textAlignment="textStart"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblIngreseNuevosDatos" />
+
+    <TextView
+        android:id="@+id/lblCPP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/productoPrecio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblCNP" />
+
+
+    <EditText
+        android:id="@+id/editProductoPrecio"
+        android:layout_width="240dp"
+        android:layout_height="35dp"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:maxLength="10"
+        android:text=""
+
+        android:textAlignment="textStart"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editProductoNombre" />
+
+
+    <TextView
+        android:id="@+id/lblCDP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/productoDescripcion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblCPP" />
+
+    <EditText
+        android:id="@+id/editProductoDescripción"
+        android:layout_width="240dp"
+        android:layout_height="35dp"
+
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+
+        android:inputType="text"
+        android:maxLength="20"
+        android:text=""
+        android:textAlignment="textStart"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editProductoPrecio" />
+
+
+    <Switch
+        android:id="@+id/switchExistencias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="96dp"
+        android:checked="false"
+        android:text="¿Tienes existencias?"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editProductoDescripción" />
+
+    <TextView
+        android:id="@+id/lblCEP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/productoExistencias"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblCDP" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupTipo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="184dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchExistencias">
+
+        <RadioButton
+            android:id="@+id/rbBebida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bebida"
+/>
+
+        <RadioButton
+            android:id="@+id/rbComida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Alimento" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lblCTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/productoTipo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblCEP" />
+
+
+    <Button
+        android:id="@+id/btnAgregarProducto"
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="32dp"
+
+        android:background="@drawable/circular_button_backgroundorange"
+        android:onClick="editarProducto"
+        android:text="@string/botonActualizar"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblCTP" />
+
+    <Button
+        android:id="@+id/btnEliminarProducto"
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/circular_button_backgroundorange"
+        android:onClick="eliminarProducto"
+        android:text="@string/botonEliminar"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnAgregarProducto" />
+</androidx.constraintlayout.widget.ConstraintLayout>

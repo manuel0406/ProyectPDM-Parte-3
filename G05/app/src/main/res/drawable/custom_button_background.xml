@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:top="2dp" android:right="2dp" android:left="2dp">
+                <shape>
+                    <corners android:radius="8dp" />
+                    <solid android:color="#E0E0E0" /> <!-- Color cuando se presiona el botón -->
+                </shape>
+            </item>
+            <item>
+                <shape>
+                    <corners android:radius="8dp" />
+                    <solid android:color="#FFFFFF" /> <!-- Color normal del botón -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item android:top="2dp" android:right="2dp" android:left="2dp">
+                <shape>
+                    <corners android:radius="8dp" />
+                    <solid android:color="#FFFFFF" /> <!-- Color normal del botón -->
+                </shape>
+            </item>
+            <item>
+                <shape>
+                    <corners android:radius="8dp" />
+                    <solid android:color="#FFFFFF" /> <!-- Color normal del botón -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

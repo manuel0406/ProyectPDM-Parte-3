@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="20dp" /> <!-- Cambia 20dp al radio que desees -->
+    <solid android:color="@color/naranja" /> <!-- Fondo naranja -->
+    <stroke
+        android:width="2dp"
+        android:color="@color/naranja" /> <!-- Borde naranja -->
+</shape>

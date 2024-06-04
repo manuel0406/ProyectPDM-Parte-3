@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Estado cuando el EditText está enfocado -->
+    <item android:state_focused="true" android:color="@color/naranja" />
+    <!-- Estado predeterminado -->
+    <item android:color="@color/black" />
+</selector>

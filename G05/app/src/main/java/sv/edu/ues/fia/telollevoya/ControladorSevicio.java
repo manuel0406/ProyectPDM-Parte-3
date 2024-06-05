@@ -21,6 +21,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 
 
+import java.io.DataOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +42,27 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Locale;
+
+
+
+
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
+
+
 
 public class ControladorSevicio {
 
@@ -285,6 +307,95 @@ public class ControladorSevicio {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+    public static String obtenerRespuestaPeticion2(String urlString, String jsonInputString, Context ctx) {
+        String respuesta = "";
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(urlString);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setDoOutput(true);
+            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Content-Type", "application/json; utf-8");
+            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setConnectTimeout(3000);
+            urlConnection.setReadTimeout(5000);
+
+            try (OutputStream os = urlConnection.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            int codigoEstado = urlConnection.getResponseCode();
+            if (codigoEstado == HttpURLConnection.HTTP_OK) {
+                try (InputStream in = urlConnection.getInputStream();
+                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = in.read(buffer)) != -1) {
+                        byteArrayOutputStream.write(buffer, 0, length);
+                    }
+                    respuesta = byteArrayOutputStream.toString("UTF-8");
+                }
+            } else {
+                respuesta = "{\"error\":\"HTTP error code: " + codigoEstado + "\"}";
+            }
+
+        } catch (Exception e) {
+            Log.e("Error de Conexion", e.toString());
+            respuesta = "{\"error\":\"Error de conexion: " + e.getMessage() + "\"}";
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
+        Log.d("Respuesta del Servidor", respuesta);  // Añadir log para ver la respuesta del servidor
+        return respuesta;
+    }
+
+
+    public static void generico2(String url, String jsonInputString, Context ctx) {
+        String json = obtenerRespuestaPeticion2(url, jsonInputString, ctx);
+        try {
+            JSONObject resultado = new JSONObject(json);
+
+            if (resultado.has("resultado")) {
+                String mensajeExito = resultado.getString("resultado");
+                Toast.makeText(ctx, mensajeExito, Toast.LENGTH_LONG).show();
+            } else if (resultado.has("error")) {
+                String mensajeError = resultado.getString("error");
+                Toast.makeText(ctx, "Error: " + mensajeError, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(ctx, "Respuesta inesperada del servidor", Toast.LENGTH_LONG).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("Error de JSON", "Error al convertir respuesta a JSON: " + e.toString());
+            Log.e("Respuesta recibida", json);  // Añadir log para ver la respuesta que causa el error
+            Toast.makeText(ctx, "Error al procesar la respuesta del servidor", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     //Actualizar ubicacion de negocio
     public static void actualizarUbicacion(String url, Context ctx) {
         AsyncTask.execute(new Runnable() {
@@ -314,10 +425,9 @@ public class ControladorSevicio {
     //Obtener todos los productos de un negocio
     public static ArrayList<Product> obtenerProductosPorIdNegocio(String url, Context ctx) {
         ArrayList<Product> productos = new ArrayList<>();
-        String respuesta = obtenerRespuestaPeticion(url, ctx);
+        String respuesta = obtenerRepuestaPeticion(url, ctx);
 
         try {
-            // Verificar si la respuesta es un array JSON
             JSONArray jsonArray = new JSONArray(respuesta);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -332,6 +442,9 @@ public class ControladorSevicio {
                 producto.setPrecioProducto((float) jsonObject.getDouble("precioProducto"));
                 producto.setExistenciaProducto(jsonObject.getInt("existenciaProducto") == 1);
 
+                // Asignar la imagen al objeto Producto
+                producto.setImagenProducto(jsonObject.getString("imagenProducto"));
+
                 // Agregar el producto a la lista
                 productos.add(producto);
             }
@@ -343,6 +456,7 @@ public class ControladorSevicio {
 
         return productos;
     }
+
 
     //Obtener los detalles de un producto en especifico
     public static Product obtenerProducto(String url, Context ctx) {

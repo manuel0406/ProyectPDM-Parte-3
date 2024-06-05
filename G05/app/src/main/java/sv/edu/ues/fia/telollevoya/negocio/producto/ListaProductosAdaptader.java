@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import sv.edu.ues.fia.telollevoya.R;
+import android.util.Base64;
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
 
 public class ListaProductosAdaptader extends RecyclerView.Adapter<ListaProductosAdaptader.ProductosViewHolder> {
     ArrayList<Product> listaProductos;
@@ -31,19 +31,34 @@ public class ListaProductosAdaptader extends RecyclerView.Adapter<ListaProductos
     @Override
     public void onBindViewHolder(@NonNull ListaProductosAdaptader.ProductosViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        holder.txtProductoID.setText(context.getString(R.string.producto_id) + " " + listaProductos.get(position).getIdProducto());
-        holder.txtNegocioID.setText(context.getString(R.string.negocio_id) + " " + listaProductos.get(position).getIdNegocio());
-        holder.txtNombre.setText(context.getString(R.string.producto_nombre) + " " + listaProductos.get(position).getNombreProducto());
-        holder.txtPrecio.setText(context.getString(R.string.producto_precio) + " " + String.valueOf(listaProductos.get(position).getPrecioProducto()));
-        holder.txtDescripcion.setText(context.getString(R.string.producto_descripcion) + " " + listaProductos.get(position).getDescripcionProducto());
-        holder.txtTipo.setText(context.getString(R.string.producto_tipo) + " " + listaProductos.get(position).getTipoProducto());
+        Product producto = listaProductos.get(position);
 
-        // Define los valores que tendrá según su valor True o False
-        String existenciaString = listaProductos.get(position).isExistenciaProducto() ?
+        holder.txtProductoID.setText(context.getString(R.string.producto_id) + " " + producto.getIdProducto());
+        holder.txtNegocioID.setText(context.getString(R.string.negocio_id) + " " + producto.getIdNegocio());
+        holder.txtNombre.setText(context.getString(R.string.producto_nombre) + " " + producto.getNombreProducto());
+        holder.txtPrecio.setText(context.getString(R.string.producto_precio) + " " + String.valueOf(producto.getPrecioProducto()));
+        holder.txtDescripcion.setText(context.getString(R.string.producto_descripcion) + " " + producto.getDescripcionProducto());
+        holder.txtTipo.setText(context.getString(R.string.producto_tipo) + " " + producto.getTipoProducto());
+
+        String existenciaString = producto.isExistenciaProducto() ?
                 context.getString(R.string.producto_disponible) :
                 context.getString(R.string.producto_no_disponible);
         holder.txtExistencias.setText(context.getString(R.string.producto_existencias) + " " + existenciaString);
+
+        // Decodificar la imagen base64 y cargarla con Glide
+        String imagenBase64 = producto.getImagenProducto();
+        if (imagenBase64 != null && !imagenBase64.isEmpty()) {
+            byte[] imageByteArray = Base64.decode(imagenBase64, Base64.DEFAULT);
+            Glide.with(context)
+                    .asBitmap()
+                    .load(imageByteArray)
+                    .into(holder.imgProducto);
+        } else {
+            // Manejar el caso cuando la imagen es null, por ejemplo, establecer una imagen predeterminada
+            holder.imgProducto.setImageResource(R.drawable.logo_general);  // Asegúrate de tener esta imagen en tus recursos
+        }
     }
+
 
 
     @Override
@@ -58,6 +73,7 @@ public class ListaProductosAdaptader extends RecyclerView.Adapter<ListaProductos
 
     public class ProductosViewHolder extends RecyclerView.ViewHolder {
         TextView txtProductoID, txtNegocioID, txtNombre, txtPrecio, txtDescripcion, txtTipo, txtExistencias;
+        ImageView imgProducto; // Nueva referencia para la imagen
 
         public ProductosViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,17 +85,17 @@ public class ListaProductosAdaptader extends RecyclerView.Adapter<ListaProductos
             txtDescripcion = itemView.findViewById(R.id.txtProductoDescripcion);
             txtTipo = itemView.findViewById(R.id.txtProductoTipo);
             txtExistencias = itemView.findViewById(R.id.txtProductoExistencias);
+            imgProducto = itemView.findViewById(R.id.imgProducto); // Nueva referencia para la imagen
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
+                    /*Context context = v.getContext();
                     Intent intent = new Intent(context, EditarProductoActivity.class);
                     intent.putExtra("idProducto", listaProductos.get(getAdapterPosition()).getIdProducto());
-                    context.startActivity(intent);
+                    context.startActivity(intent);*/
                 }
             });
         }
     }
 }
-

@@ -43,7 +43,7 @@ public class CrearProductoActivity extends AppCompatActivity {
     Button btnSeleccionarImagen;
     Bitmap bitmap;
     int idNegocioRecuperado;
-    private final String urlProducto = "https://telollevoya.000webhostapp.com/Producto/insertarProducto.php";
+    private final String urlProducto = "https://telollevoya.000webhostapp.com/Producto/insertarProductov2.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

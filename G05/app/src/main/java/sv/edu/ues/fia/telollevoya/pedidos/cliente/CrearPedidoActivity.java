@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,9 +22,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -43,6 +52,8 @@ public class CrearPedidoActivity extends AppCompatActivity {
     private float totPagar;
     private ArrayList<Integer> detallesEliminar;
     ArrayList<DetallePedido> detallePedidosList;
+    ArrayList<String> imagenesProd;
+    ArrayList<String> imagenesProdEliminar;
     DetalleProductoCardAdapter adapter;
     private ControlBD controlBD;
     int[] idLugares = new int[3];
@@ -61,7 +72,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
         idCliente = controlBD.consultaUsuario();
         controlBD.cerrar();
         Bundle objetoRecibido = getIntent().getExtras();
-        if (objetoRecibido != null | !objetoRecibido.isEmpty()) {
+        if (objetoRecibido != null && !objetoRecibido.isEmpty()) {
             detallePedidosList = (ArrayList) objetoRecibido.getSerializable("detalles");
             adapter = new DetalleProductoCardAdapter(CrearPedidoActivity.this, 0, detallePedidosList);
             detallesListView.setAdapter(adapter);
@@ -236,7 +247,7 @@ public class CrearPedidoActivity extends AppCompatActivity {
             convertView = getLayoutInflater().inflate(R.layout.detalle_card_custom, parent, false);
             TextView nomProductoTextView = convertView.findViewById(R.id.nomProd_textView);
             TextView precioProductoTextView = convertView.findViewById(R.id.precio_textView);
-            ImageView productoImageView = convertView.findViewById(R.id.prod_imgView);
+            ImageView prodImg = convertView.findViewById(R.id.prod_imgView);
             ImageButton minusBtn = convertView.findViewById(R.id.imgMinus);
             ImageButton plusBtn = convertView.findViewById(R.id.imgPlus);
             TextView cantProductoTextView = convertView.findViewById(R.id.txtNumbers);
@@ -278,6 +289,10 @@ public class CrearPedidoActivity extends AppCompatActivity {
                 dialogo.show();
             });
 
+                Picasso.get()
+                        .load(Uri.fromFile(new File(getCacheDir(), "temp_image_"+dp.getProducto().getId()+".jpg")))
+                        .error(R.drawable.logo_general)
+                        .into(prodImg);
             return convertView;
         }
     }

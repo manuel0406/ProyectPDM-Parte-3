@@ -423,7 +423,7 @@ public class ControladorSevicio {
             if (respuesta == 1) {
                 Toast.makeText(ctx, "Registro ingresado", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(ctx, "Registro ingresado", Toast.LENGTH_LONG).show();
+                Toast.makeText(ctx, "Registro no ingresado", Toast.LENGTH_LONG).show();
             }
             // Llamar al método de callback con el ID de la reservación
             //  listener.onReservacionInserted(idReservacion);

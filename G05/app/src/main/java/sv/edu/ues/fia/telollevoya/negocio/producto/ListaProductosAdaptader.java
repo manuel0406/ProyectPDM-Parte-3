@@ -1,18 +1,21 @@
 package sv.edu.ues.fia.telollevoya.negocio.producto;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
-import sv.edu.ues.fia.telollevoya.R;
-import android.util.Base64;
-import android.widget.ImageView;
 import com.bumptech.glide.Glide;
+import java.util.ArrayList;
+import sv.edu.ues.fia.telollevoya.ControladorSevicio;
+import sv.edu.ues.fia.telollevoya.R;
 
 public class ListaProductosAdaptader extends RecyclerView.Adapter<ListaProductosAdaptader.ProductosViewHolder> {
     ArrayList<Product> listaProductos;
@@ -57,9 +60,27 @@ public class ListaProductosAdaptader extends RecyclerView.Adapter<ListaProductos
             // Manejar el caso cuando la imagen es null, por ejemplo, establecer una imagen predeterminada
             holder.imgProducto.setImageResource(R.drawable.logo_general);  // Asegúrate de tener esta imagen en tus recursos
         }
+
+        // Manejar el evento de clic del botón eliminar
+        holder.btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Mostrar el diálogo de confirmación
+                new AlertDialog.Builder(context)
+                        .setTitle("Confirmar eliminación")
+                        .setMessage("¿Estás seguro de que deseas eliminar este producto?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Eliminar el producto
+                                eliminarProducto(context, String.valueOf(producto.getIdProducto()), holder.getAdapterPosition());
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -71,9 +92,17 @@ public class ListaProductosAdaptader extends RecyclerView.Adapter<ListaProductos
         notifyDataSetChanged();
     }
 
+    private void eliminarProducto(Context context, String idProducto, int position) {
+        String urlEliminar = "https://telollevoya.000webhostapp.com/Producto/eliminarProducto.php?idProducto=" + idProducto;
+        ControladorSevicio.generico(urlEliminar, context);
+        listaProductos.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public class ProductosViewHolder extends RecyclerView.ViewHolder {
         TextView txtProductoID, txtNegocioID, txtNombre, txtPrecio, txtDescripcion, txtTipo, txtExistencias;
-        ImageView imgProducto; // Nueva referencia para la imagen
+        ImageView imgProducto;
+        Button btnEliminar;
 
         public ProductosViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,17 +114,8 @@ public class ListaProductosAdaptader extends RecyclerView.Adapter<ListaProductos
             txtDescripcion = itemView.findViewById(R.id.txtProductoDescripcion);
             txtTipo = itemView.findViewById(R.id.txtProductoTipo);
             txtExistencias = itemView.findViewById(R.id.txtProductoExistencias);
-            imgProducto = itemView.findViewById(R.id.imgProducto); // Nueva referencia para la imagen
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    /*Context context = v.getContext();
-                    Intent intent = new Intent(context, EditarProductoActivity.class);
-                    intent.putExtra("idProducto", listaProductos.get(getAdapterPosition()).getIdProducto());
-                    context.startActivity(intent);*/
-                }
-            });
+            imgProducto = itemView.findViewById(R.id.imgProducto);
+            btnEliminar = itemView.findViewById(R.id.btnEliminar);
         }
     }
 }

@@ -222,6 +222,7 @@
     <string name="productoDescripcion">Descripcion:</string>
     <string name="productoExistencias">Existencias:</string>
     <string name="productoTipo">Tipo:</string>
+    <string name="productoImagen">Seleccionar Imagen</string>
     <string name="selectorExistencia">¿Tienes existencias?</string>
     <string name="productoIndicaciones">Editando producto, ingrese sus nuevos datos</string>
     <string name="productoIndicaciones2">Agregando producto, ingrese sus datos</string>

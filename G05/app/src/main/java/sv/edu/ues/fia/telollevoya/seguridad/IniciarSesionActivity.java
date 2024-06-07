@@ -1,13 +1,20 @@
 package sv.edu.ues.fia.telollevoya.seguridad;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,7 +87,6 @@ public class IniciarSesionActivity extends Activity {
         }
 
         ultimoInicio();
-
     }
 
     //----------------------------------------------------------------------------------------------

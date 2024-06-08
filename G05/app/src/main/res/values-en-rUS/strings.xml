@@ -225,6 +225,7 @@
     <string name="productoDescripcion">Description:</string>
     <string name="productoExistencias">Stock:</string>
     <string name="productoTipo">Type:</string>
+    <string name="productoImagen">Select Image</string>
     <string name="selectorExistencia">Do you have stock?</string>
     <string name="productoIndicaciones">Editing product, enter your new data</string>
     <string name="productoIndicaciones2">Adding product, enter your data</string>
@@ -239,7 +240,6 @@
     <string name="rolRepartidor">Delivery Person</string>
 
     <!--Payment View -->
-    <string name="app_name2">Te lo Llevo Ya</string>
     <string name="select_payment_method">Select Payment Method</string>
     <string name="cash">Cash</string>
     <string name="card">Credit/Debit Card</string>
@@ -261,10 +261,36 @@
     <string name="product_name">Product Name</string>
     <string name="price">Price</string>
 
-    <string name="revisar_factura">Review Invoice</string>
-    <string name="ver_estado_orden">View the status of my order</string>
-    <string name="pedido_confirmado">Order confirmed! Thank you for trusting us, you will soon receive your order</string>
-    <string name="pago_exito">Payment made successfully!</string>
+    <!-- Approved Payment View of an Order -->
+    <string name="ver_resumen_pedido">View Order Summary</string>
+    <string name="ver_estado_orden">View Order Status</string>
+    <string name="pedido_confirmado">Order confirmed! We appreciate your trust in us. You will receive your order soon.</string>
+    <string name="pago_exito">Payment Successful!</string>
+
+    <!-- Approved Payment View of Reservation -->
+    <string name="ver_resumen_reservacion">View Reservation Summary</string>
+    <string name="reservacion_confirmada">Reservation confirmed! We appreciate your trust in us. Your order will be delivered as scheduled.</string>
+
+    <!-- Order Summary View -->
+    <string name="resumen_de_pedido">Order Summary</string>
+    <string name="direccion_de_envio">Shipping Address</string>
+    <string name="productos_adquiridos">Purchased Items</string>
+    <string name="numero_de_pedido">Order Number:</string>
+    <string name="fecha_de_entrega">Delivery Date:</string>
+    <string name="forma_de_pago">Payment Method:</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="costo_de_envio">Shipping Cost</string>
+    <string name="total_a_pagar">Total</string>
+    <string name="regresar">Back</string>
+
+    <!-- Reservation Summary View -->
+    <string name="resumen_reservacion">Reservation Summary</string>
+    <string name="descripcion_reservacion">Description:</string>
+    <string name="monto_anticipacion">Advance Amount:</string>
+    <string name="monto_pendiente">Pending Amount</string>
+    <string name="lista_productos_reservados">Reserved Products List</string>
+    <string name="numero_reservacion">Reservation Number:</string>
+    <string name="forma_pago">Payment Method:</string>
 
 
 

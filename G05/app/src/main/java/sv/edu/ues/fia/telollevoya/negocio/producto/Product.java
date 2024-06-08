@@ -1,16 +1,23 @@
 package sv.edu.ues.fia.telollevoya.negocio.producto;
 
 public class Product {
-
     private int idNegocio;
     private int idProducto;
     private String nombreProducto, tipoProducto, descripcionProducto;
     private float precioProducto;
     private boolean existenciaProducto;
+    private String imagenProducto; // Nueva propiedad para la imagen
 
-    public Product() {
-
+    // Getters y setters para la nueva propiedad
+    public String getImagenProducto() {
+        return imagenProducto;
     }
+
+    public void setImagenProducto(String imagenProducto) {
+        this.imagenProducto = imagenProducto;
+    }
+
+    public Product() {}
 
     public int getIdNegocio() {
         return idNegocio;

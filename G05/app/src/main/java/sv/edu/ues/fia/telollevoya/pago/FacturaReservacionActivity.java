@@ -3,27 +3,22 @@ package sv.edu.ues.fia.telollevoya.pago;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-import sv.edu.ues.fia.telollevoya.ControlBD;
 import sv.edu.ues.fia.telollevoya.ControladorSevicio;
 import sv.edu.ues.fia.telollevoya.DetallePedido;
 import sv.edu.ues.fia.telollevoya.R;
 import sv.edu.ues.fia.telollevoya.Reservacion;
 import sv.edu.ues.fia.telollevoya.Reservaciones.DetallePedidoR;
 import sv.edu.ues.fia.telollevoya.pedidos.cliente.MisPedidosActivity;
+import sv.edu.ues.fia.telollevoya.pedidos.negocio.NegociosActivity;
 
 public class FacturaReservacionActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -50,7 +45,7 @@ public class FacturaReservacionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pago_factura);
+        setContentView(R.layout.activity_reservacion_resumen);
 
         //se recibe la reservacion y la lista de detalles desde la pantalla anterior
         reservacion = (Reservacion) getIntent().getSerializableExtra("reservacion");
@@ -86,15 +81,8 @@ public class FacturaReservacionActivity extends AppCompatActivity {
 
 
 
-        txTitulo.setText("Resumen de Reservacion");
-
-        txNumReservacion.setText("Número de Reservación: ");
         txNumReservacionValue.setText(String.valueOf(reservacion.getIdReservacion()));
-
-        txFechaEntrega.setText("Fecha de entrega: ");
         txFechaEntregaValue.setText(reservacion.getFechaEntregaR() + " a las "+ reservacion.getHoraEntrega());
-
-        txDescripcion.setText("Descripción: ");
         txDescripcionValue.setText(reservacion.getDescripcionReservacion());
 
         recyclerView = findViewById(R.id.recyclerView);
@@ -102,23 +90,15 @@ public class FacturaReservacionActivity extends AppCompatActivity {
         adaptador = new AdaptadorProductosAPagar(listaAdaptada);
         recyclerView.setAdapter(adaptador);
 
-        SpannableString spannableString = new SpannableString("Total A Pagar: ");
-        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, 13, 0);
-        txTotal.setText(spannableString);
         txTotalValue.setText(String.format("$%.2f", reservacion.getTotalRerservacion()));
-
-        txMontoAnticipado.setText("Monto Anticipado: ");
         txMontoAnticipadoValue.setText(String.format("$%.2f", reservacion.getAnticipoReservacion()));
-
-        txMontoPendiente.setText("Monto Pendiente: ");
         txMontoPendienteValue.setText(String.format("$%.2f", reservacion.getMontoPediente()));
-
         txMetodoPago.setVisibility(View.GONE);
         txMetodoPagoValue.setVisibility(View.GONE);
     }
 
-    public void regresarAPantallaInicial(View view) {
-        Intent intent = new Intent(this, MisPedidosActivity.class);
+    public void regresarAListaDeNegocios(View view) {
+        Intent intent = new Intent(this, NegociosActivity.class);
         startActivity(intent);
     }
 

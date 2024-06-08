@@ -65,7 +65,7 @@ public class ProductosActivity extends AppCompatActivity {
     }
 
     private void cargarProductos() {
-        String url = "https://telollevoya.000webhostapp.com/Producto/obtenerProductosPorIdNegocio.php?idNegocio=" + idNegocioRecuperado;
+        String url = "https://telollevoya.000webhostapp.com/Producto/obtenerProductosPorIdNegociov2.php?idNegocio=" + idNegocioRecuperado;
         new ObtenerProductosTask(this).execute(url);
     }
 

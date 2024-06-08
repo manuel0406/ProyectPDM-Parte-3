@@ -3,6 +3,9 @@ package sv.edu.ues.fia.telollevoya.pedidos.cliente;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.speech.RecognizerIntent;
@@ -12,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -21,10 +25,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +51,8 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
     private SearchView searchView;
     ArrayList<Producto> productos;
     ArrayList<DetallePedido> detallesPedidosList;
+    ArrayList<String> imagenesProductos;
+    ArrayList<String> imagenesProdSelec;
     ProductoCardAdapter adapter;
     ControlBD db;
     private int idNegocio;
@@ -63,6 +75,8 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
         searchView = findViewById(R.id.searchView);
         productos = new ArrayList<>();
         detallesPedidosList = new ArrayList<>();
+        imagenesProdSelec = new ArrayList<>();
+        imagenesProductos = new ArrayList<>();
         getProductosPorNegocio();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -74,16 +88,27 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(newText.isEmpty()) {
+                    productos.clear();
+                    imagenesProductos.clear();
                     getProductosPorNegocio();
                     prod_listView.setVisibility(View.VISIBLE);
                 }
                 else {
-                    ArrayList<Producto> nuevosProd = (ArrayList<Producto>) productos.stream().filter(producto ->
-                            producto.getNombre().toLowerCase().contains(newText.toLowerCase()))
-                            .collect(Collectors.toList());
+                    ArrayList<Producto> nuevosProd = new ArrayList<>();
+                    ArrayList<String> nuevasImg = new ArrayList<>();
+                    // Recorrer el ArrayList y aplicar el filtro
+                    for (int i = 0; i < productos.size(); i++) {
+                        Producto producto = productos.get(i);
+                        if (producto.getNombre().toLowerCase().contains(newText.toLowerCase())) {
+                            nuevosProd.add(producto);
+                            nuevasImg.add(imagenesProductos.get(i));
+                        }
+                    }
                     if(!nuevosProd.isEmpty()){
                         productos.clear();
                         productos.addAll(nuevosProd);
+                        imagenesProductos.clear();
+                        imagenesProductos.addAll(nuevasImg);
                         adapter.notifyDataSetChanged();
                         prod_listView.setVisibility(View.VISIBLE);
                     }else{
@@ -105,6 +130,8 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
                 detallePedido.setProducto(producto);
                 Toast.makeText(SeleccionarProductoActivity.this, "Producto agregado al carrito :)", Toast.LENGTH_SHORT).show();
                 detallesPedidosList.add(detallePedido);
+                //agregando imagen relacionada al producto en cuestion
+                imagenesProdSelec.add(imagenesProductos.get(posicion));
             }
             else
                 Toast.makeText(SeleccionarProductoActivity.this, "No se puede seleccionar pupusas a esta hora", Toast.LENGTH_SHORT).show();
@@ -115,6 +142,8 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
             detallePedido.setProducto(producto);
             Toast.makeText(SeleccionarProductoActivity.this, "Producto agregado al carrito :)", Toast.LENGTH_SHORT).show();
             detallesPedidosList.add(detallePedido);
+            //agregando imagen relacionada al producto en cuestion
+            imagenesProdSelec.add(imagenesProductos.get(posicion));
         }
     }
 
@@ -140,7 +169,7 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
                     ArrayList<Integer> posiciones = (ArrayList) data.getSerializableExtra("positions");
                     int contposDesplazado = 0;
                     for(int pos = 0; pos < posiciones.size(); pos++){
-                        int posActual = pos - contposDesplazado;
+                        int posActual = posiciones.get(pos) - contposDesplazado;
                         detallesPedidosList.remove(posActual);
                         Toast.makeText(this, "A eliminar " + pos, Toast.LENGTH_SHORT).show();
                         contposDesplazado++;
@@ -168,14 +197,15 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
             for(int i = 0; i < jsonArray.length() ; i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Producto producto = new Producto();
-                producto.setId(jsonObject.getInt("IDPRODUCTO"));
-                producto.setIdNegocio(jsonObject.getInt("IDNEGOCIO"));
-                producto.setNombre(jsonObject.getString("NOMBREPRODUCTO"));
-                producto.setTipo(jsonObject.getString("TIPOPRODUCTO"));
-                producto.setDescripcion(jsonObject.getString("DESCRIPCIONPRODUCTO"));
-                producto.setPrecio(Float.parseFloat(jsonObject.getString("PRECIOPRODUCTO")));
-                producto.setExistencia(jsonObject.getInt("EXISTENCIAPRODUCTO") > 0);
+                producto.setId(jsonObject.getInt("idProducto"));
+                producto.setIdNegocio(jsonObject.getInt("idNegocio"));
+                producto.setNombre(jsonObject.getString("nombreProducto"));
+                producto.setTipo(jsonObject.getString("tipoProducto"));
+                producto.setDescripcion(jsonObject.getString("descripcionProducto"));
+                producto.setPrecio(Float.parseFloat(jsonObject.getString("precioProducto")));
+                producto.setExistencia(jsonObject.getInt("existenciaProducto") > 0);
                 productos.add(producto);
+                imagenesProductos.add(jsonObject.getString("imagenProducto"));
             }
             adapter = new ProductoCardAdapter(this, productos);
             prod_listView.setAdapter(adapter);
@@ -231,6 +261,7 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
             TextView precioProdTextView = convertView.findViewById(R.id.precioProd_textView);
             TextView descrProdTextView = convertView.findViewById(R.id.descProd_textView);
             Button agregarBTn = convertView.findViewById(R.id.agregar_btn);
+            ImageView prodImg = convertView.findViewById(R.id.producto_img);
 
             Producto p = productos.get(position);
             nomProdTextView.setText(p.getNombre());
@@ -240,6 +271,30 @@ public class SeleccionarProductoActivity extends AppCompatActivity implements Ad
             try {
                 agregarBTn.setOnClickListener(v -> agregarProducto((int) v.getTag()));
             }catch (Exception ex){ex.printStackTrace();}
+
+            //Cargando Imagen de producto
+            String imagen = imagenesProductos.get(position);
+            if(!imagen.isEmpty() && imagen != null){
+                byte[] decodedBytes = new byte[0];
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    decodedBytes = Base64.getDecoder().decode(imagen);
+                }
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                // Crear un archivo temporal en el almacenamiento interno
+                File cacheDir = getApplicationContext().getCacheDir();
+                File tempFile = new File(cacheDir, "temp_image_"+p.getId()+".jpg");
+                try (FileOutputStream out = new FileOutputStream(tempFile)) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                    out.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Picasso.get()
+                        .load(Uri.fromFile(tempFile))
+                        .error(R.drawable.logo_general)
+                        .into(prodImg);
+            }
+            else Picasso.get().load(R.drawable.logo_general).into(prodImg);
             return convertView;
         }
     }

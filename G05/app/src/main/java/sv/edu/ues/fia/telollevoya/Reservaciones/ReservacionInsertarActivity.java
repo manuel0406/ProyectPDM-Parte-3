@@ -1,8 +1,11 @@
 package sv.edu.ues.fia.telollevoya.Reservaciones;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -34,6 +37,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,6 +46,7 @@ import sv.edu.ues.fia.telollevoya.ControladorSevicio;
 
 import sv.edu.ues.fia.telollevoya.Producto;
 import sv.edu.ues.fia.telollevoya.R;
+import sv.edu.ues.fia.telollevoya.ReminderReceiver;
 import sv.edu.ues.fia.telollevoya.Reservacion;
 import sv.edu.ues.fia.telollevoya.pago.SeleccionPagoActivity;
 
@@ -145,7 +150,9 @@ public class ReservacionInsertarActivity extends AppCompatActivity implements Co
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     edtFecha.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+
                 }
+
             }, ano, mes, dia);
             datePickerDialog.show();;
 
@@ -160,13 +167,39 @@ public class ReservacionInsertarActivity extends AppCompatActivity implements Co
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     edtHora.setText(hourOfDay+":"+minute);
+
                 }
             },hora,minutos,false);
             timePickerDialog.show();
 
         }
     }
+    public void programarRecordatorio() {
+        String fechaTexto = edtFecha.getText().toString();
+        String horaTexto = edtHora.getText().toString();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        try {
+            Date fechaHora = dateFormat.parse(fechaTexto + " " + horaTexto);
+            long timeInMillis = fechaHora.getTime();
+            setReminder(this, timeInMillis);
+            Toast.makeText(this, "Recordatorio programado", Toast.LENGTH_SHORT).show();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressLint("ScheduleExactAlarm")
+    public void setReminder(Context context, long timeInMillis) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, ReminderReceiver.class);
+        int requestCode = 0;
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_IMMUTABLE); // o PendingIntent.FLAG_MUTABLE
+
+        if (alarmManager != null) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+        }
+    }
     public void limpiarTexto(){
         edtFecha.setText("");
         edtHora.setText("");
@@ -210,6 +243,7 @@ public class ReservacionInsertarActivity extends AppCompatActivity implements Co
             reservacion.setTotalRerservacion(totalReservacion);
             insertarDetallePedido();
 
+            programarRecordatorio();
             Intent intent = new Intent(ReservacionInsertarActivity.this, SeleccionPagoActivity.class);
             Bundle extra = new Bundle();
             extra.putSerializable("reservacion", reservacion);
@@ -264,7 +298,7 @@ public class ReservacionInsertarActivity extends AppCompatActivity implements Co
     private void agregarElementos() {
         String url = urlProducto + "?IDNEGOCIO=" + idNegocio;
         String productosR = ControladorSevicio.obtenerRepuestaPeticion(url, this);
-
+        Log.v("urlProdctos",url);
         try {
             listaproductos.addAll(ControladorSevicio.obtenerProductos(productosR, this));
             //actualizarListView();

@@ -1,9 +1,12 @@
 package sv.edu.ues.fia.telollevoya.pedidos.cliente;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -207,7 +211,20 @@ public class MisPedidosActivity extends Activity {
                 if(result) {
                     v.setEnabled(false);
                     v.setBackgroundColor(Color.GRAY);
-                    Toast.makeText(MisPedidosActivity.this, "Pedido cancelado", Toast.LENGTH_SHORT).show();
+                    //Mostrar notificación Push
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),"Channel")
+                            .setSmallIcon(R.drawable.logo_general)
+                            .setContentTitle("Pedido Cancelado")
+                            .setContentText("Haz cancelado con éxito tu pedido")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        CharSequence name = "Channel";// The user-visible name of the channel.
+                        int importance = NotificationManager.IMPORTANCE_HIGH;
+                        NotificationChannel mChannel = new NotificationChannel("Channel", name, importance);
+                        notificationManager.createNotificationChannel(mChannel);
+                    }
+                    notificationManager.notify(1, builder.build());
                 }
                 else
                     Toast.makeText(MisPedidosActivity.this, "No se pudo cancelar :(", Toast.LENGTH_SHORT).show();

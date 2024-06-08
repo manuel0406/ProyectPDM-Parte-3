@@ -1,8 +1,11 @@
 package sv.edu.ues.fia.telollevoya.pedidos.negocio;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -132,7 +136,20 @@ public class PedidosDelRepartidorActivity extends AppCompatActivity {
                 String url = URL_ACTUALIZAR_ESTADOPEDIDO_SERVICIO+"pedido="+idPedido+"&estado=3";//Dando por ENTREGADO el pedido con la fecha actual
                 String respuesta = ControladorSevicio.obtenerRespuestaPeticion(url, getApplicationContext());
                 if (respuesta.toLowerCase().contains("actualizado")){
-                    Toast.makeText(PedidosDelRepartidorActivity.this, "Estado de pedido actualizado a REALIZADO!!", Toast.LENGTH_SHORT).show();
+                    //Mostrar notificación Push
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),"Channel")
+                            .setSmallIcon(R.drawable.logo_general)
+                            .setContentTitle("Pedido Realizado")
+                            .setContentText("Haz finalizado el pedido")
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                    NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        CharSequence name = "Channel";// The user-visible name of the channel.
+                        int importance = NotificationManager.IMPORTANCE_HIGH;
+                        NotificationChannel mChannel = new NotificationChannel("Channel", name, importance);
+                        notificationManager.createNotificationChannel(mChannel);
+                    }
+                    notificationManager.notify(1, builder.build());
                     v.setEnabled(false);
                     v.setBackgroundColor(Color.GRAY);
                 }

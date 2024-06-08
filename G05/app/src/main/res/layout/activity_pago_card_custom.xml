@@ -2,21 +2,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="6dp">
+    android:layout_marginStart="0dp"
+    android:layout_marginEnd="0dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp">
 
     <TextView
         android:id="@+id/cantidadProducto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_weight="0.15"
         android:text="@string/quantity"
+        android:textAlignment="gravity"
+        android:textColor="#595959"
         android:textSize="17sp" />
     <TextView
         android:id="@+id/nombreProducto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginEnd="4dp"
+        android:textColor="#595959"
         android:text="@string/product_name"
         android:textSize="17sp" />
 
@@ -25,5 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/price"
+        android:textColor="#595959"
         android:textSize="17sp" />
 </LinearLayout>

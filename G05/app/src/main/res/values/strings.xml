@@ -238,7 +238,6 @@
     <string name="rolRepartidor">Repartidor</string>
 
     <!--Vista de Pago -->
-    <string name="app_name2">Te lo llevo ya</string>
     <string name="select_payment_method">Seleccione método de Pago</string>
     <string name="cash">Efectivo</string>
     <string name="card">Tarjeta Crédito/Débito</string>
@@ -259,11 +258,37 @@
     <string name="quantity">Cant</string>
     <string name="product_name">Nombre del Producto</string>
     <string name="price">Precio</string>
-    
-    <string name="revisar_factura">Revisar Factura</string>
-    <string name="ver_estado_orden">Ver Estado de mi orden</string>
-    <string name="pedido_confirmado">¡Pedido confirmado! Gracias por confiar en nosotros, pronto recibirás tu pedido</string>
+
+    <!--Vista de Pago Aprobado de un Pedido -->
+    <string name="ver_resumen_pedido">Ver Resumen del Pedido</string>
+    <string name="ver_estado_orden">Ver Estado de mis Ordenes</string>
+    <string name="pedido_confirmado">¡Pedido confirmado! Agradecemos su confianza en nosotros. Pronto recibirá su pedido.</string>
     <string name="pago_exito">¡Pago realizado con éxito!</string>
+
+    <!--Vista de Pago Aprobado para una Reservacion-->
+    <string name="ver_resumen_reservacion">Ver Resumen de Reservación</string>
+    <string name="reservacion_confirmada">¡Reservación confirmada! Agradecemos su confianza en nosotros. Su pedido será entregado según lo programado.</string>
+
+    <!--Vista de Resumen de Pedido -->
+    <string name="resumen_de_pedido">Resumen de Pedido</string>
+    <string name="direccion_de_envio">Dirección de envío:</string>
+    <string name="productos_adquiridos">Productos Adquiridos</string>
+    <string name="numero_de_pedido">Número de Pedido:</string>
+    <string name="fecha_de_entrega">Fecha de Entrega:</string>
+    <string name="forma_de_pago">Forma de Pago:</string>
+    <string name="subtotal">Subtotal:</string>
+    <string name="costo_de_envio">Costo de envío:</string>
+    <string name="total_a_pagar">Total a Pagar:</string>
+    <string name="regresar">Regresar</string>
+
+    <!-- Vista de Resumen Reservacion -->
+    <string name="resumen_reservacion">Resumen Reservacion</string>
+    <string name="descripcion_reservacion">Descripción:</string>
+    <string name="monto_anticipacion">Monto de Anticipación:</string>
+    <string name="monto_pendiente">Monto Pendiente:</string>
+    <string name="lista_productos_reservados">Lista de productos reservados</string>
+    <string name="numero_reservacion">Número de Reservación:</string>
+    <string name="forma_pago">Forma de Pago:</string>
 
 
 </resources>

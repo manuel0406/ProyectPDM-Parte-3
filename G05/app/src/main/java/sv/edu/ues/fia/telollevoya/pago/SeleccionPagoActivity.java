@@ -14,12 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -35,6 +37,7 @@ import sv.edu.ues.fia.telollevoya.Pedido;
 import sv.edu.ues.fia.telollevoya.R;
 import sv.edu.ues.fia.telollevoya.Reservacion;
 import sv.edu.ues.fia.telollevoya.Reservaciones.DetallePedidoR;
+import sv.edu.ues.fia.telollevoya.pedidos.cliente.MisPedidosActivity;
 
 public class SeleccionPagoActivity extends AppCompatActivity {
 
@@ -45,6 +48,9 @@ public class SeleccionPagoActivity extends AppCompatActivity {
     private EditText nombreTitular;
     private EditText correo;
     private RadioGroup radioGroupMetodoPago;
+    private RadioButton rbEfectivo;
+    private RadioButton rbTarjeta;
+    private RadioButton rbBitcoin;
     private ConstraintLayout layoutFormularioTarjetaCredito;
     private ConstraintLayout layoutFormularioBitcoin;
     private ConstraintLayout layoutFormularioCorreo;
@@ -53,7 +59,7 @@ public class SeleccionPagoActivity extends AppCompatActivity {
     private boolean tipoPagoSeleccionado;
     private ImageView codigoQR;
     private TextView txtDireccionBitcoin;
-    private Button btnCopiarDireccion;
+    private ImageView imgCopiarDireccion;
     Pedido pedido;
     Reservacion reservacion;
     ArrayList<DetallePedidoR> detallesPedidoR;
@@ -68,6 +74,9 @@ public class SeleccionPagoActivity extends AppCompatActivity {
         // Inicialización de variables
         controlBD = new ControlBD(SeleccionPagoActivity.this);
         radioGroupMetodoPago = findViewById(R.id.radioGroupMetodoPago);
+        rbEfectivo = findViewById(R.id.radioButtonEfectivo);
+        rbTarjeta = findViewById(R.id.radioButtonTarjeta);
+        rbBitcoin = findViewById(R.id.radioButtonBitcoin);
         layoutFormularioTarjetaCredito = findViewById(R.id.layoutFormularioTarjetaCredito);
         layoutFormularioTarjetaCredito.setVisibility(View.GONE);
         layoutFormularioBitcoin = findViewById(R.id.layoutFormularioBitcoin);
@@ -75,7 +84,7 @@ public class SeleccionPagoActivity extends AppCompatActivity {
         layoutFormularioCorreo = findViewById(R.id.layoutFormularioCorreo);
         codigoQR = findViewById(R.id.imgCodigoQR);
         txtDireccionBitcoin = findViewById(R.id.txtDireccionBitcoin);
-        btnCopiarDireccion = findViewById(R.id.btnCopiarDireccion);
+        imgCopiarDireccion = findViewById(R.id.imgCopiarDireccion);
         tipoPagoSeleccionado = false;
         metodoPago = new MetodoPago();
         factura = new Factura();
@@ -88,7 +97,7 @@ public class SeleccionPagoActivity extends AppCompatActivity {
             detallesPedidoR = getIntent().getParcelableArrayListExtra("listaDetalle");
         }
 
-        if(pedido != null) {
+        if (pedido != null) {
             float totalAPagar = pedido.getTotalAPagar() + pedido.getCostoEnvio();
             pedido.setTotalAPagar(totalAPagar);
         }
@@ -97,25 +106,22 @@ public class SeleccionPagoActivity extends AppCompatActivity {
         radioGroupMetodoPago.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                layoutFormularioTarjetaCredito.setVisibility(View.GONE);
+                layoutFormularioBitcoin.setVisibility(View.GONE);
+
                 if (checkedId == R.id.radioButtonEfectivo) {
-                    layoutFormularioTarjetaCredito.setVisibility(View.GONE);
-                    layoutFormularioBitcoin.setVisibility(View.GONE);
-                    layoutFormularioCorreo.setTranslationY(0);
                     metodoPago.setId(1);
-                    metodoPago.setTipoPago("Efectivo");
+                    metodoPago.setTipoPago(rbEfectivo.getText().toString());
                 } else if (checkedId == R.id.radioButtonTarjeta) {
                     layoutFormularioTarjetaCredito.setVisibility(View.VISIBLE);
-                    layoutFormularioBitcoin.setVisibility(View.GONE);
-                    layoutFormularioCorreo.setTranslationY(900);
                     metodoPago.setId(2);
-                    metodoPago.setTipoPago("Tarjeta");
-                } else if(checkedId == R.id.radioButtonBitcoin){
-                    layoutFormularioTarjetaCredito.setVisibility(View.GONE);
+                    metodoPago.setTipoPago(rbTarjeta.getText().toString());
+                } else if (checkedId == R.id.radioButtonBitcoin) {
                     layoutFormularioBitcoin.setVisibility(View.VISIBLE);
-                    layoutFormularioCorreo.setTranslationY(0);
                     metodoPago.setId(3);
-                    metodoPago.setTipoPago("Bitcoin");
+                    metodoPago.setTipoPago(rbBitcoin.getText().toString());
                 }
+
                 tipoPagoSeleccionado = true; // Ya se seleccionó un tipo de pago
             }
         });
@@ -129,10 +135,12 @@ public class SeleccionPagoActivity extends AppCompatActivity {
         // Manejo de formatos para el campo de número de tarjeta de crédito o débito
         numeroTarjeta.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -162,10 +170,12 @@ public class SeleccionPagoActivity extends AppCompatActivity {
         // Manejo de formato para el campo de fecha de expiración de la tarjeta de crédito/débito
         fechaExpiracion.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -192,11 +202,11 @@ public class SeleccionPagoActivity extends AppCompatActivity {
             Toast.makeText(this, "Debe seleccionar un tipo de pago", Toast.LENGTH_SHORT).show();
         } else if (!datosValidos) {
             Toast.makeText(this, "Error, datos de la tarjeta no son válidos", Toast.LENGTH_SHORT).show();
-        } else if(!isValidEmail(correoStr)){
+        } else if (!isValidEmail(correoStr)) {
             Toast.makeText(this, "Error, ingrese un correo electrónico válido", Toast.LENGTH_SHORT).show();
         } else {
 
-            if(pedido != null){ //si se trata de un pedido
+            if (pedido != null) { //si se trata de un pedido
 
                 //generarFactura(); // Insertar factura en BD SQLite
                 insertarFactura(view); //Insertar factura usando Web Service
@@ -209,19 +219,20 @@ public class SeleccionPagoActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, PagoAprobadoPActivity.class);
                 intent.putExtra("pedido", pedido);
                 startActivity(intent);
-
+                finish();
 //                Bundle extra = new Bundle();
 //                extra.putSerializable("reservacion", reservacion);
 //                intent.putParcelableArrayListExtra("listaDetalle",  listDetalle);
 //                intent.putExtra("idNegocio", idNegocio);
 //                intent.putExtras(extra);
 
-            } else{
+            } else {
                 //Entonces se trata de una reservacion
                 Intent intent = new Intent(this, PagoAprobadoRActivity.class);
                 intent.putExtra("reservacion", reservacion);
-                intent.putParcelableArrayListExtra("listaDetalle",  detallesPedidoR);
+                intent.putParcelableArrayListExtra("listaDetalle", detallesPedidoR);
                 startActivity(intent);
+                finish();
             }
         }
     }
@@ -265,7 +276,7 @@ public class SeleccionPagoActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         fechaEmision = dateFormat.format(fechaActual);
 
-        if(metodoPago.getId() == 2){ //si el tipo de pago es tarjeta
+        if (metodoPago.getId() == 2) { //si el tipo de pago es tarjeta
             String numeroTarjetaStr = numeroTarjeta.getText().toString();
             String ultimosCuatroDigitos = numeroTarjetaStr.substring(numeroTarjetaStr.length() - 4);
             metodoPago.setTipoPago(metodoPago.getTipoPago() + " " + ultimosCuatroDigitos);
@@ -281,19 +292,25 @@ public class SeleccionPagoActivity extends AppCompatActivity {
         String totalPagadoCodificado = "";
         String fechaEmisionCodificada = "";
 
-        try{
+        try {
             idPagoCodificado = URLEncoder.encode(idPago, "UTF-8");
             totalPagadoCodificado = URLEncoder.encode(totalPagado, "UTF-8");
             fechaEmisionCodificada = URLEncoder.encode(fechaEmision, "UTF-8");
-        } catch (UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
-        String url = urlFactura + "?idPago=" + idPagoCodificado + "&totalPagado="+ totalPagadoCodificado + "&fechaEmision=" + fechaEmisionCodificada;
+        String url = urlFactura + "?idPago=" + idPagoCodificado + "&totalPagado=" + totalPagadoCodificado + "&fechaEmision=" + fechaEmisionCodificada;
         Log.v("URL INSERTAR FACTURA: ", url);
         ControladorSevicio.insertarFactura(url, this);
 
     }
+
+    public void regresarACarrito(View view) {
+        finish(); //regresamos a pantalla anterior
+    }
+
+
 }
 
 

@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -60,7 +59,7 @@ public class PagoAprobadoPActivity extends AppCompatActivity implements Controla
     }
 
     //Metodos para los botones
-    public void solicitarVerFactura(View view) {
+    public void verResumenDePedido(View view) {
         Intent intent = new Intent(this, FacturaActivity.class);
         intent.putExtra("pedido", (Serializable) pedido);
         startActivity(intent);

@@ -51,7 +51,7 @@ public class FacturaActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pago_factura);
+        setContentView(R.layout.activity_pago_resumen);
 
         //helper = new ControlBD(this);
 
@@ -67,7 +67,6 @@ public class FacturaActivity extends AppCompatActivity{
         detallesPedido = ControladorSevicio.obtenerDetallesPedidoPorId(urlDetallesPedido + pedido.getId(), this);
 
         txTitulo = (TextView) findViewById(R.id.txtTituloResumen);
-        txTitulo.setText("Resumen de Pedido");
 
         txDireccionValue = (TextView) findViewById(R.id.txtValue3);
         txDireccionValue.setText(pedido.getUbicacion().toString());
@@ -136,27 +135,8 @@ public class FacturaActivity extends AppCompatActivity{
         txMetodoPagoValue.setText(pedido.getFactura().getMetodoPago().toString());
 
         txTotal = (TextView) findViewById(R.id.txt6);
-        SpannableString spannableString = new SpannableString("Total A Pagar ");
-        spannableString.setSpan(new StyleSpan(Typeface.BOLD), 0, 13, 0);
-        txTotal.setText(spannableString);
 
     }
-
-//    //Métodos que ya no usaré
-//    private double calcularSumaSubtotales(List<DetallePedidoR> detallesPedido) {
-//        double suma = 0.0;
-//        for (DetallePedidoR dp : detallesPedido) {
-//            suma += dp.getSubTotal();
-//        }
-//        return suma;
-//    }
-//
-//    private double calcularTotal(List<DetallePedidoR> detallesPedido) {
-//        double total = 0.0;
-//        double costoEnvio = 1.0; //un dolar por default
-//        total = calcularSumaSubtotales(detallesPedido) + costoEnvio;
-//        return total;
-//    }
 
     public void regresarAPantallaInicial(View view) {
         Intent intent = new Intent(this, MisPedidosActivity.class);

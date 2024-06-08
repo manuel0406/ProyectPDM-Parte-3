@@ -224,6 +224,7 @@
     <string name="productoDescripcion">Description:</string>
     <string name="productoExistencias">Stock:</string>
     <string name="productoTipo">Type:</string>
+    <string name="productoImagen">Select Image</string>
     <string name="selectorExistencia">Do you have stock?</string>
     <string name="productoIndicaciones">Editing product, enter your new data</string>
     <string name="productoIndicaciones2">Adding product, enter your data</string>

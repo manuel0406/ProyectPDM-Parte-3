@@ -290,5 +290,39 @@
     <string name="numero_reservacion">Número de Reservación:</string>
     <string name="forma_pago">Forma de Pago:</string>
 
+    <!--Vista de PDF Factura Pedido -->
+    <string name="factura_numero">Factura No.:</string>
+    <string name="nit_empresa">NIT: 0614-151220-104-0</string>
+    <string name="cliente">Cliente: </string>
+    <string name="datos_negocio">Datos de </string>
+    <string name="ubicacion_facturaP">Ubicación: </string>
+    <string name="telefono_contacto">Teléfono de Contacto: </string>
+    <string name="detalles_pedido">Detalles del Pedido: </string>
+    <string name="numero_pedido">Número del Pedido: </string>
+    <string name="repartidor_facturaP">Repartidor: </string>
+    <string name="fecha_entrega_facturaP">Fecha de Entrega: </string>
+    <string name="direccion_entrega">Dirección de entrega: </string>
+    <string name="lista_productos">Lista de Productos: </string>
+    <string name="metodo_pago">Método de Pago: </string>
+    <string name="subtotal_facturaP">Subtotal: </string>
+    <string name="costo_envio">Costos de Envío: </string>
+    <string name="pago_total">Pago total: </string>
+    <string name="cantidad">Cantidad</string>
+    <string name="precio_unitario">Precio Unitario</string>
+    <string name="total_factura">Total</string>
+    <string name="comentario_factura">Para comentarios respecto al servicio puede contactarnos a telollevoya.suporte@gmail.com"</string>
+
+    <!-- Vista de PDF Comprobante de Resevacion -->
+    <string name="comprobante_reservacion">Comprobante de Reservación</string>
+    <string name="datos_reservacion">Datos de la Reservación</string>
+    <string name="numero_reservacion_factura">Número: </string>
+    <string name="restaurante">Restaurante: </string>
+    <string name="a_las">a las</string>
+
+    <!-- correo electronico -->
+    <string name="titulo_correo">Te lo Llevo Ya! - Factura Electrónica</string>
+    <string name="titulo_correo_reservacion">Te lo Llevo Ya! - Reservación</string>
+    <string name="mensaje_correo">Estimado %1$s,\n\nNos complace informarle que el pago de su factura ha sido procesado exitosamente.\n\nAdjunto encontrará su factura electrónica detallada por los servicios adquiridos.\n\nGracias por confiar en los servicios de Te lo Llevo Ya! Si tiene alguna pregunta o necesita asistencia adicional, no dude en ponerse en contacto con nuestro equipo de atención al cliente.\n\nSaludos cordiales,\nEl equipo de Te lo Llevo Ya!</string>
+    <string name="mensaje_correo_reservacion">Estimado %1$s,\n\nNos complace informarle que su pago se ha realizado exitosamente.\n\nAdjunto encontrará un comprobante detallado de su reservación.\n\nGracias por confiar en los servicios de Te lo Llevo Ya! Si tiene alguna pregunta o necesita asistencia adicional, no dude en ponerse en contacto con nuestro equipo de atención al cliente.\n\nSaludos cordiales,\nEl equipo de Te lo Llevo Ya!</string>
 
 </resources>

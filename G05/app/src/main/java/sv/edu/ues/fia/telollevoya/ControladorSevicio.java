@@ -949,6 +949,136 @@ public class ControladorSevicio {
         return producto;
     }
 
+//    public static Restaurant obtenerNegocioPorId(String url, Context ctx) {
+//        Restaurant negocio = null;
+//
+//        String respuesta = obtenerRespuestaPeticion(url, ctx);
+//
+//        try {
+//            JSONObject jsonObject = new JSONObject(respuesta);
+//            negocio = new Restaurant();
+//            negocio.setIdNegocio(jsonObject.getInt("IDNEGOCIO"));
+//            negocio.setIdUbicacion((jsonObject.getInt("IDUBICACION")));
+//            negocio.setIdAdministrador(jsonObject.getInt("IDADMINISTRADOR"));
+//            negocio.setNombre(jsonObject.getString("NOMBRENEGOCIO"));
+//            negocio.setTelefono(jsonObject.getString("TELEFONONEGOCIO"));
+//            negocio.setHorarioApertura(jsonObject.getString("HORARIOAPERTURA"));
+//            negocio.setHorarioCierre(jsonObject.getString("HORARIOCIERRE"));
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            Toast.makeText(ctx, "Error al procesar la respuesta del servidor", Toast.LENGTH_LONG).show();
+//            Log.e("Error al obtener negocio", e.toString());
+//        }
+//        return negocio;
+//    }
+
+    public static Restaurant obtenerNegocioPorId(String url, Context ctx) {
+        Restaurant negocio = null;
+
+        String respuesta = obtenerRespuestaPeticion(url, ctx);
+
+        if (respuesta == null || respuesta.isEmpty()) {
+            Log.e("Error", "La respuesta del servidor está vacía");
+            Toast.makeText(ctx, "Error: La respuesta del servidor está vacía", Toast.LENGTH_LONG).show();
+            return null;
+        }
+
+        Log.d("Respuesta del servidor", respuesta); // Añade esto para ver la respuesta completa
+
+        try {
+            JSONObject jsonObject = new JSONObject(respuesta);
+
+            if (!jsonObject.has("IDNEGOCIO") || !jsonObject.has("IDUBICACION") || !jsonObject.has("IDADMINISTRADOR") ||
+                    !jsonObject.has("NOMBRENEGOCIO") || !jsonObject.has("TELEFONONEGOCIO") || !jsonObject.has("HORARIOAPERTURA") ||
+                    !jsonObject.has("HORARIOCIERRE") || !jsonObject.has("DESCRIPCIONUBICACION") || !jsonObject.has("DISTRITO")) {
+                Log.e("Error", "Datos incompletos en la respuesta del servidor");
+                Toast.makeText(ctx, "Error: Datos incompletos en la respuesta del servidor", Toast.LENGTH_LONG).show();
+                return null;
+            }
+
+            negocio = new Restaurant();
+            negocio.setIdNegocio(jsonObject.getInt("IDNEGOCIO"));
+            negocio.setIdUbicacion(jsonObject.getInt("IDUBICACION"));
+            negocio.setIdAdministrador(jsonObject.getInt("IDADMINISTRADOR"));
+            negocio.setNombre(jsonObject.getString("NOMBRENEGOCIO"));
+            negocio.setTelefono(jsonObject.getString("TELEFONONEGOCIO"));
+            negocio.setHorarioApertura(jsonObject.getString("HORARIOAPERTURA"));
+            negocio.setHorarioCierre(jsonObject.getString("HORARIOCIERRE"));
+
+            // Crear el objeto Ubicacion y asignar valores
+            Ubicacion ubicacion = new Ubicacion();
+            ubicacion.setId(jsonObject.getInt("IDUBICACION"));
+            ubicacion.setDescripcion(jsonObject.getString("DESCRIPCIONUBICACION"));
+
+            // Obtener el objeto Distrito del JSON
+            JSONObject jsonDistrito = jsonObject.getJSONObject("DISTRITO");
+
+            // Crear el objeto Distrito y asignar valores
+            Distrito distrito = new Distrito();
+            distrito.setIdDistrito(jsonDistrito.getInt("IDDISTRITO"));
+            distrito.setNombreDistrito(jsonDistrito.getString("NOMBREDISTRITO"));
+            distrito.setIdMunicipio(jsonDistrito.getInt("IDMUNICIPIO"));
+
+            // Crear el objeto Municipio y asignar valores
+            Municipio municipio = new Municipio();
+            municipio.setIdMunicipio(jsonDistrito.getInt("IDMUNICIPIO"));
+            municipio.setNombreMunicipio(jsonDistrito.getString("NOMBREMUNICIPIO"));
+            municipio.setIdDepartamento(jsonDistrito.getInt("IDDEPARTAMENTO"));
+
+            // Crear el objeto Departamento y asignar valores
+            Departamento departamento = new Departamento();
+            departamento.setIdDepartamento(jsonDistrito.getInt("IDDEPARTAMENTO"));
+            departamento.setNombreDepartamento(jsonDistrito.getString("NOMBREDEPARTAMENTO"));
+
+            // Asignar el distrito al objeto Ubicacion
+            ubicacion.setDistrito(distrito);
+
+            // Crear una descripción completa de la ubicación
+            String descripcionUbicacionCompleta = ubicacion.getDescripcion() + ", " +
+                    distrito.getNombreDistrito() + ", " +
+                    municipio.getNombreMunicipio() + ", " +
+                    departamento.getNombreDepartamento();
+
+            // Asignar la descripción completa al negocio
+            negocio.setDescripcionUbicacion(descripcionUbicacionCompleta);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(ctx, "Error al procesar la respuesta del servidor", Toast.LENGTH_LONG).show();
+            Log.e("Error al obtener negocio", e.toString());
+        }
+        return negocio;
+    }
+
+
+
+
+
+
+    public static Cliente obtenerClientePorId(String url, Context ctx) {
+        Cliente cliente = null;
+
+        String respuesta = obtenerRespuestaPeticion(url, ctx);
+
+        try {
+            JSONObject jsonObject = new JSONObject(respuesta);
+            cliente= new Cliente();
+            cliente.setIdCliente(String.valueOf(jsonObject.getInt("IDCLIENTE")));
+            cliente.setNombre(jsonObject.getString("NOMBRECLIENTE"));
+            cliente.setApellido(jsonObject.getString("APELLIDOSCLIENTE"));
+            cliente.setSexo(jsonObject.getString("SEXOCLIENTE"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(ctx, "Error al procesar la respuesta del servidor", Toast.LENGTH_LONG).show();
+            Log.e("Error al obtener cliente", e.toString());
+        }
+        return cliente;
+    }
+
+
+
+
     // ***** Fin de Funciones para Pagos y Facturas (Michael) ***** //
     //-----------------------------------------------------------------//
 }

@@ -224,6 +224,7 @@ public class PedidosPendientesActivity extends AppCompatActivity implements Adap
                     }
                     notificationManager.notify(1, builder.build());
                     repartidorTextView.setText(repartidor.getNombre());
+                    ServiciosFactura.pedido.setRepartidor(repartidor);
                 }else Toast.makeText(PedidosPendientesActivity.this, "Ocurrió un problema",
                         Toast.LENGTH_SHORT).show();
             });

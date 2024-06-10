@@ -192,15 +192,15 @@ public class ServiciosFactura {
             //Agregando mensaje al pdf
             document.add(new Paragraph("\n" + context.getString(R.string.factura_numero) + pedido.getFactura().getId()));
             document.add(new Paragraph(context.getString(R.string.nit_empresa)));
-            document.add(new Paragraph(context.getString(R.string.cliente) + cliente.getNombre() + " " + cliente.getApellido()));
-            document.add(new Paragraph("\n" + context.getString(R.string.datos_negocio) + negocio.getNombre()).setFontSize(11).setBold());
-            document.add(new Paragraph(context.getString(R.string.ubicacion_facturaP) + negocio.getDescripcionUbicacion()));
-            document.add(new Paragraph(context.getString(R.string.telefono_contacto) + negocio.getTelefono()));
+            document.add(new Paragraph( context.getString(R.string.cliente)+ " " + cliente.getNombre() + " " + cliente.getApellido()));
+            document.add(new Paragraph("\n" + context.getString(R.string.datos_negocio) + " "+negocio.getNombre()).setFontSize(11).setBold());
+            document.add(new Paragraph(context.getString(R.string.ubicacion_facturaP)+" " + negocio.getDescripcionUbicacion()));
+            document.add(new Paragraph(context.getString(R.string.telefono_contacto) +" "+ negocio.getTelefono()));
             document.add(new Paragraph("\n" + context.getString(R.string.detalles_pedido)).setFontSize(11).setBold());
-            document.add(new Paragraph(context.getString(R.string.numero_pedido) + pedido.getId()));
+            document.add(new Paragraph(context.getString(R.string.numero_pedido) +" "+ pedido.getId()));
             document.add(new Paragraph(context.getString(R.string.repartidor_facturaP) + pedido.getRepartidor().getNombre() + " " + pedido.getRepartidor().getApellido()));
-            document.add(new Paragraph(context.getString(R.string.fecha_entrega_facturaP) + fechaE));
-            document.add(new Paragraph(context.getString(R.string.direccion_entrega) + direccion));
+            document.add(new Paragraph(context.getString(R.string.fecha_entrega_facturaP) +" "+ fechaE));
+            document.add(new Paragraph(context.getString(R.string.direccion_entrega) +" "+ direccion));
             document.add(new Paragraph("\n" + context.getString(R.string.lista_productos)).setFontSize(11).setBold());
 
             //crear la tabla

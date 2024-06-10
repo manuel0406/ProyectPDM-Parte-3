@@ -34,6 +34,7 @@ import sv.edu.ues.fia.telollevoya.ControladorSevicio;
 import sv.edu.ues.fia.telollevoya.Pedido;
 import sv.edu.ues.fia.telollevoya.R;
 import sv.edu.ues.fia.telollevoya.Repartidor;
+import sv.edu.ues.fia.telollevoya.pago.ServiciosFactura;
 
 public class PedidosPendientesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
@@ -121,6 +122,7 @@ public class PedidosPendientesActivity extends AppCompatActivity implements Adap
                 rep.setNombre(object.getString("NOMBREREPARTIDOR"));
                 rep.setApellido(object.getString("APELLIDOREPARTIDOR"));
                 pedido.setRepartidor(rep);
+                ServiciosFactura.pedido.setRepartidor(rep);
 
                 Cliente cliente = new Cliente();
                 cliente.setIdCliente(Integer.toString(object.getInt("IDCLIENTE")));

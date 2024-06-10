@@ -139,7 +139,6 @@
     <string name="seleccionarHora">Seleccionar Hora:</string>
 
 
-
     <!--Vista de negocio-->
     <string name="negocioCrearIndicaciones">Ingrese los datos de su negocio: </string>
     <string name="negocioCrearIndicaciones2">Ingrese la ubicación de su negocio: </string>
@@ -328,5 +327,10 @@
     <string name="titulo_correo_reservacion">Te lo Llevo Ya! - Reservación</string>
     <string name="mensaje_correo">Estimado %1$s,\n\nNos complace informarle que el pago de su factura ha sido procesado exitosamente.\n\nAdjunto encontrará su factura electrónica detallada por los servicios adquiridos.\n\nGracias por confiar en los servicios de Te lo Llevo Ya! Si tiene alguna pregunta o necesita asistencia adicional, no dude en ponerse en contacto con nuestro equipo de atención al cliente.\n\nSaludos cordiales,\nEl equipo de Te lo Llevo Ya!</string>
     <string name="mensaje_correo_reservacion">Estimado %1$s,\n\nNos complace informarle que su pago se ha realizado exitosamente.\n\nAdjunto encontrará un comprobante detallado de su reservación.\n\nGracias por confiar en los servicios de Te lo Llevo Ya! Si tiene alguna pregunta o necesita asistencia adicional, no dude en ponerse en contacto con nuestro equipo de atención al cliente.\n\nSaludos cordiales,\nEl equipo de Te lo Llevo Ya!</string>
+
+    <!-- Legal -->
+    <string name="terminos_politicas_privacidad">Al continuar, aceptas nuestros Términos y Condiciones y Políticas de Privacidad.</string>
+    <string name="terminos_y_condiciones">Términos y Condiciones</string>
+    <string name="politica_privacidad">Políticas de Privacidad</string>
 
 </resources>

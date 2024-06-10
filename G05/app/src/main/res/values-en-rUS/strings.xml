@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="id_facebook">503017942062767</string>
+    <string name="fb_login_protocol_scheme">fb503017942062767</string>
+    <string name="facebook_client_token">5dd71c7d293d895035b6becd8b8ce2e2</string>
     <string name="app_name">Te Lo Llevo Ya!</string>
     <string name="cerrar">Log Out</string>
     <string name="buscar_producto">Search product</string>
@@ -7,8 +10,6 @@
     <string name="codigo">Code</string>
     <string name="nombre">Name</string>
     <string name="PedidosAsignados">Assigned Orders</string>
-
-
     <string name="monto">Amount</string>
     <string name="fecha_pedido">Order Date</string>
     <string name="fecha_entrega">Delivery Date</string>

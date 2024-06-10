@@ -8,6 +8,10 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +22,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
@@ -27,6 +33,8 @@ import org.json.JSONObject;
 
 import sv.edu.ues.fia.telollevoya.ControlBD;
 import sv.edu.ues.fia.telollevoya.ControladorSevicio;
+import sv.edu.ues.fia.telollevoya.legal.PoliticaPrivacidadActivity;
+import sv.edu.ues.fia.telollevoya.legal.TerminosCondicionesActivity;
 import sv.edu.ues.fia.telollevoya.negocio.negocio.MiNegocioActivity;
 import sv.edu.ues.fia.telollevoya.R;
 import sv.edu.ues.fia.telollevoya.Usuario;
@@ -43,6 +51,7 @@ public class IniciarSesionActivity extends Activity {
     EditText txtCorreo, txtContra;
     boolean  desdeInicioApp;
     String contra,correo,rol,idUsuario;
+    TextView lblTerminosYCondiciones;
 
     ControlBD BDhelper;
     @Override
@@ -57,6 +66,7 @@ public class IniciarSesionActivity extends Activity {
 
         txtCorreo = findViewById(R.id.txtCorreo);
         txtContra = findViewById(R.id.txtContra);
+        lblTerminosYCondiciones = findViewById(R.id.lblTerminosYCondiciones);
 
         BDhelper= new ControlBD(this);
         try{
@@ -87,6 +97,45 @@ public class IniciarSesionActivity extends Activity {
         }
 
         ultimoInicio();
+
+        // INICIO de "Terminos y Condiciones"
+        String text = getString(R.string.terminos_politicas_privacidad);
+        SpannableString spannableString = new SpannableString(text);
+
+        ClickableSpan termsClick = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Intent intent = new Intent(IniciarSesionActivity.this, TerminosCondicionesActivity.class);
+                startActivity(intent);
+            }
+        };
+
+        ClickableSpan privacyClick = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                Intent intent = new Intent(IniciarSesionActivity.this, PoliticaPrivacidadActivity.class);
+                startActivity(intent);
+            }
+        };
+
+        //obteniendo las posiciones de los textos específicos
+        int termsStart = text.indexOf(getString(R.string.terminos_y_condiciones));
+        int termsEnd = termsStart + getString(R.string.terminos_y_condiciones).length();
+        int privacyStart = text.indexOf(getString(R.string.politica_privacidad));
+        int privacyEnd = privacyStart + getString(R.string.politica_privacidad).length();
+
+        if (termsStart >= 0 && termsEnd > termsStart) {
+            spannableString.setSpan(termsClick, termsStart, termsEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        if (privacyStart >= 0 && privacyEnd > privacyStart) {
+            spannableString.setSpan(privacyClick, privacyStart, privacyEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        lblTerminosYCondiciones.setText(spannableString);
+        lblTerminosYCondiciones.setMovementMethod(LinkMovementMethod.getInstance());
+        // FIN de "Terminos y Condiciones"
+
     }
 
     //----------------------------------------------------------------------------------------------

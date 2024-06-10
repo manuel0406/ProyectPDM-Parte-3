@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,9 +36,13 @@ public class PagoAprobadoPActivity extends AppCompatActivity implements Controla
         setContentView(R.layout.activity_pago_aprobado);
 
         pedido = (Pedido) getIntent().getSerializableExtra("pedido");
+        Intent intent = getIntent();
+        String correoElectronico = intent.getStringExtra("CORREO_ELECTRONICO");
+        ServiciosFactura.correoUsuario = correoElectronico;
         detallesPedido = pedido.getDetallePedidoList();
         Log.v("DetallesPedido size", String.valueOf(detallesPedido.size()));
         Log.v("DetallesPedido elemento1", detallesPedido.get(0).getProducto().getNombre());
+
 
         EstadoOrden estado = new EstadoOrden(1, "ACTIVO");
         pedido.setEstadoOrden(estado); //al aprobarse el pago inmediatamente la orden pasa a estar activa
@@ -48,6 +53,7 @@ public class PagoAprobadoPActivity extends AppCompatActivity implements Controla
         pedido.getUbicacion().setId(lastUbicacionId);
 
         insertarPedido();
+        ServiciosFactura.pedido = pedido;
 
 //        //Código para hacer pruebas nada más
 //        factura = pedido.getFactura();

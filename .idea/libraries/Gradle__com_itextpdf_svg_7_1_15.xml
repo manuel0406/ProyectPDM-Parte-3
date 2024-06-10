@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.itextpdf:svg:7.1.15" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.itextpdf" artifactId="svg" version="7.1.15" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/svg/7.1.15/5555e4c15c712effa4aa96f46dc9cd713e281e32/svg-7.1.15.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/svg/7.1.15/21ea8045bce3394ec6a7c89f24df54cb0f6c32ca/svg-7.1.15-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/svg/7.1.15/b6748dc1d263187821f1e81eb9753f18351893b6/svg-7.1.15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -211,12 +211,15 @@ public class SeleccionPagoActivity extends AppCompatActivity {
                 //generarFactura(); // Insertar factura en BD SQLite
                 insertarFactura(view); //Insertar factura usando Web Service
 
+                String correoElectronico = correoStr;
+
                 SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE); // Recuperar el ID de la factura de SharedPreferences
                 int lastFacturaId = sharedPreferences.getInt("lastFacturaId", -1);
                 factura.setId(lastFacturaId);
 
                 pedido.setFactura(factura);//se le asigna la factura al pedido
                 Intent intent = new Intent(this, PagoAprobadoPActivity.class);
+                intent.putExtra("CORREO_ELECTRONICO", correoElectronico);
                 intent.putExtra("pedido", pedido);
                 startActivity(intent);
                 finish();
@@ -228,8 +231,10 @@ public class SeleccionPagoActivity extends AppCompatActivity {
 
             } else {
                 //Entonces se trata de una reservacion
+                String correoElectronico = correoStr;
                 Intent intent = new Intent(this, PagoAprobadoRActivity.class);
                 intent.putExtra("reservacion", reservacion);
+                intent.putExtra("CORREO_ELECTRONICO", correoElectronico);
                 intent.putParcelableArrayListExtra("listaDetalle", detallesPedidoR);
                 startActivity(intent);
                 finish();

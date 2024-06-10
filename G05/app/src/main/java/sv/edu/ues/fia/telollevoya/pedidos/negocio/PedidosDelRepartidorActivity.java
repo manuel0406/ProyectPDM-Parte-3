@@ -40,6 +40,7 @@ import sv.edu.ues.fia.telollevoya.Pedido;
 import sv.edu.ues.fia.telollevoya.R;
 import sv.edu.ues.fia.telollevoya.Repartidor;
 import sv.edu.ues.fia.telollevoya.Ubicacion;
+import sv.edu.ues.fia.telollevoya.pago.ServiciosFactura;
 import sv.edu.ues.fia.telollevoya.seguridad.IniciarSesionActivity;
 
 public class PedidosDelRepartidorActivity extends AppCompatActivity {
@@ -136,6 +137,8 @@ public class PedidosDelRepartidorActivity extends AppCompatActivity {
                 String url = URL_ACTUALIZAR_ESTADOPEDIDO_SERVICIO+"pedido="+idPedido+"&estado=3";//Dando por ENTREGADO el pedido con la fecha actual
                 String respuesta = ControladorSevicio.obtenerRespuestaPeticion(url, getApplicationContext());
                 if (respuesta.toLowerCase().contains("actualizado")){
+                    //Enviar Factura al cliente
+                    ServiciosFactura.generarFactura(parent.getContext());
                     //Mostrar notificación Push
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(),"Channel")
                             .setSmallIcon(R.drawable.logo_general)

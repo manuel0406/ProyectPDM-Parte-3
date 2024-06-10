@@ -7,4 +7,5 @@
     <color name="gris"> #B6B6B6</color>
     <color name="trasparente">#00F40202</color>
     <color name="error">#990000</color>
+    <color name="semi_transparent_background">#AAFFFFFF</color>
 </resources>

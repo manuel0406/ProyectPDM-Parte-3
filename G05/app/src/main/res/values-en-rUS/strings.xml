@@ -292,6 +292,44 @@
     <string name="numero_reservacion">Reservation Number:</string>
     <string name="forma_pago">Payment Method:</string>
 
+    <!-- Order PDF Invoice View -->
+    <string name="factura_numero">Invoice No.:</string>
+    <string name="nit_empresa">TIN: 0614-151220-104-0</string>
+    <string name="cliente">Client: </string>
+    <string name="datos_negocio">Business Information for </string>
+    <string name="ubicacion_facturaP">Location: </string>
+    <string name="telefono_contacto">Contact Phone: </string>
+    <string name="detalles_pedido">Order Details: </string>
+    <string name="numero_pedido">Order Number: </string>
+    <string name="repartidor_facturaP">Delivery Person: </string>
+    <string name="fecha_entrega_facturaP">Delivery Date: </string>
+    <string name="direccion_entrega">Delivery Address: </string>
+    <string name="lista_productos">Products List: </string>
+    <string name="metodo_pago">Payment Method:</string>
+    <string name="subtotal_facturaP">Subtotal: </string>
+    <string name="costo_envio">Shipping Costs: </string>
+    <string name="pago_total">Total Payment: </string>
+    <string name="cantidad">Quantity</string>
+    <string name="total_factura">Total</string>
+    <string name="precio_unitario">Unit Price</string>
+    <string name="comentario_factura">For service-related comments, you can contact us at telollevoya.support@gmail.com</string>
 
+    <!-- Reservation PDF Invoice View -->
+    <string name="comprobante_reservacion">Reservation Receipt</string>
+    <string name="datos_reservacion">Reservation Details</string>
+    <string name="numero_reservacion_factura">Number:</string>
+    <string name="restaurante">Restaurant:</string>
+    <string name="a_las">at</string>
+
+    <!-- Email -->
+    <string name="titulo_correo">Te lo Llevo Ya! - Electronic Invoice</string>
+    <string name="titulo_correo_reservacion">Te lo Llevo Ya! - Reservation</string>
+    <string name="mensaje_correo">Dear %1$s,\n\nWe are pleased to inform you that the payment for your invoice has been successfully processed.\n\nAttached you will find your detailed electronic invoice for the services acquired.\n\nThank you for trusting Te lo Llevo Ya services! If you have any questions or need further assistance, please do not hesitate to contact our customer support team.\n\nBest regards,\nThe Te lo Llevo Ya team!</string>
+    <string name="mensaje_correo_reservacion">Dear %1$s,\n\nWe are pleased to inform you that your payment has been successfully processed.\n\nAttached you will find a detailed receipt of your reservation.\n\nThank you for trusting Te lo Llevo Ya services! If you have any questions or need further assistance, please do not hesitate to contact our customer support team.\n\nBest regards,\nThe Te lo Llevo Ya team!</string>
+
+    <!-- Legal -->
+    <string name="terminos_politicas_privacidad">By continuing, you agree to our Terms and Conditions and Privacy Policy.</string>
+    <string name="terminos_y_condiciones">Terms and Conditions</string>
+    <string name="politica_privacidad">Privacy Policy</string>
 
 </resources>

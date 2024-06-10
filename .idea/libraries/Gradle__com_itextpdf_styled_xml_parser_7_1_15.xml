@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.itextpdf:styled-xml-parser:7.1.15" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.itextpdf" artifactId="styled-xml-parser" version="7.1.15" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/styled-xml-parser/7.1.15/e43571a5cef95c717ed145ff9e5094f94ba70786/styled-xml-parser-7.1.15.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/styled-xml-parser/7.1.15/78dd4843745d5270efe7f25d8d3c4f4ca67d730d/styled-xml-parser-7.1.15-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/styled-xml-parser/7.1.15/67cb9bfc422ef02d5a1683bb10cde39961b58520/styled-xml-parser-7.1.15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

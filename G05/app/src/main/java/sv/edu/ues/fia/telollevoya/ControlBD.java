@@ -1462,6 +1462,7 @@ public class ControlBD {
         db.execSQL("DELETE FROM distrito");
         db.execSQL("DELETE FROM municipio");
         db.execSQL("DELETE FROM departamento");
+        db.execSQL("DELETE FROM estadoOrden");
 
         Departamento departamento = new Departamento();
         for (int i = 0; i < 14; i++) {
@@ -1486,6 +1487,7 @@ public class ControlBD {
         }
         EstadoOrden estadoOrden= new EstadoOrden();
         for (int i=0; i< VEstado.length; i++){
+            estadoOrden.setId(i+1);
             estadoOrden.setTipo(VEstado[i]);
             insertar(estadoOrden);
         }
@@ -1499,6 +1501,7 @@ public class ControlBD {
     String regInsertados = "Registros insertados N° = ";
     long contador;
     ContentValues est= new ContentValues();
+    est.put("idEstado", estadoOrden.getId());
     est.put("tipoEstado", estadoOrden.getTipo());
 
     contador = db.insert("EstadoOrden", null, est);
